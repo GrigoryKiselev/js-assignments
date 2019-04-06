@@ -22,7 +22,7 @@
  *   '',  'bb'  => 'bb'
  */
 function concatenateStrings(value1, value2) {
-    throw new Error('Not implemented');
+    return value1 + value2;
 }
 
 
@@ -38,7 +38,7 @@ function concatenateStrings(value1, value2) {
  *   ''      => 0
  */
 function getStringLength(value) {
-    throw new Error('Not implemented');
+    return value.length;
 }
 
 /**
@@ -55,7 +55,7 @@ function getStringLength(value) {
  *   'Chuck','Norris'  => 'Hello, Chuck Norris!'
  */
 function getStringFromTemplate(firstName, lastName) {
-    throw new Error('Not implemented');
+    return "Hello, " + firstName + " " + lastName + "!" ;
 }
 
 /**
@@ -69,7 +69,10 @@ function getStringFromTemplate(firstName, lastName) {
  *   'Hello, Chuck Norris!' => 'Chuck Norris'
  */
 function extractNameFromTemplate(value) {
-    throw new Error('Not implemented');
+	var buf;
+	buf = value.substr(7);
+	buf = buf.substr(0, buf.length-1);
+    return buf;
 }
 
 
@@ -84,7 +87,7 @@ function extractNameFromTemplate(value) {
  *   'cat'       => 'c'
  */
 function getFirstChar(value) {
-    throw new Error('Not implemented');
+    return value.charAt(0);
 }
 
 /**
@@ -99,7 +102,7 @@ function getFirstChar(value) {
  *   '\tHello, World! ' => 'Hello, World!'
  */
 function removeLeadingAndTrailingWhitespaces(value) {
-    throw new Error('Not implemented');
+    return value.trim();
 }
 
 /**
@@ -114,7 +117,12 @@ function removeLeadingAndTrailingWhitespaces(value) {
  *   'cat', 3 => 'catcatcat'
  */
 function repeatString(value, count) {
-    throw new Error('Not implemented');
+	var result = "";
+	for( var i = 0; i < count; i++)
+	{
+		result = result + value;
+	}
+	return result;
 }
 
 /**
@@ -130,7 +138,7 @@ function repeatString(value, count) {
  *   'ABABAB','BA' => 'ABAB'
  */
 function removeFirstOccurrences(str, value) {
-    throw new Error('Not implemented');
+    return str.replace(value, "");
 }
 
 /**
@@ -145,7 +153,7 @@ function removeFirstOccurrences(str, value) {
  *   '<a>' => 'a'
  */
 function unbracketTag(str) {
-    throw new Error('Not implemented');
+    return str.slice(1, -1);
 }
 
 
@@ -160,7 +168,7 @@ function unbracketTag(str) {
  *  'abcdefghijklmnopqrstuvwxyz' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
  */
 function convertToUpperCase(str) {
-    throw new Error('Not implemented');
+    return str.toUpperCase();
 }
 
 /**
@@ -174,7 +182,16 @@ function convertToUpperCase(str) {
  *   'info@gmail.com' => ['info@gmail.com']
  */
 function extractEmails(str) {
-    throw new Error('Not implemented');
+	var gmails = [];
+	var i = 0;
+    while (str.indexOf(";") != -1)
+	{
+		gmails[i] = str.substr(0, str.indexOf(";"));
+		str = str.slice(str.indexOf(";") + 1);
+		i++;
+	};
+	gmails[i] = str;
+	return gmails;
 }
 
 /**
@@ -201,7 +218,52 @@ function extractEmails(str) {
  *
  */
 function getRectangleString(width, height) {
-    throw new Error('Not implemented');
+	var result = "";
+	var i = 0;
+    for(i = 0; i < height; i++)
+	{
+		for(var j = 0; j < width; j++)
+		{
+			if( (i == 0) && (j == 0))
+			{
+				result = result + "┌";
+			}
+			if( (i == 0) && (j == width-1))
+			{
+				result = result + "┐";
+			}
+			if( (i == height-1) && (j == 0))
+			{
+				result = result + "└";
+			}
+			if( (i == height-1) && (j == width-1))
+			{
+				result = result + "┘";
+			}
+			if( (i == 0) && (j != 0) && (j != width-1))
+			{
+				result = result + "─";
+			}
+			if( (i == height-1) && (j != 0) && (j != width-1))
+			{
+				result = result + "─";
+			}
+			if( (i != 0) && (i != height-1) && (j == width-1))
+			{
+				result = result + "│";
+			}
+			if( (i != 0) && (i != height-1) && (j == 0))
+			{
+				result = result + "│";
+			}
+			if( (i != 0) && (i != height-1) && (j != 0) && (j != width-1))
+			{
+				result = result + " ";
+			}
+		}
+		result = result + "\n";
+	};
+	return result;
 }
 
 
@@ -221,7 +283,43 @@ function getRectangleString(width, height) {
  *
  */
 function encodeToRot13(str) {
-    throw new Error('Not implemented');
+	var i = 0;
+	var result = "";
+	var buf = "";
+    for( i = 0; i < str.length; i++)
+	{
+		if((str.charCodeAt(i) > 96) && (str.charCodeAt(i) < 123))
+		{	
+			if(str.charCodeAt(i) + 13 >= 123)
+			{
+				result = result + String.fromCharCode(str.charCodeAt(i) - 13);
+			}
+			else
+			{
+				result = result + String.fromCharCode(str.charCodeAt(i) + 13);
+			}
+		}
+		else
+		{
+			if((str.charCodeAt(i) > 64) && (str.charCodeAt(i) < 91))
+			{	
+				if(str.charCodeAt(i) + 13 >= 91)
+				{
+					result = result + String.fromCharCode(str.charCodeAt(i) - 13);
+				}
+				else
+				{
+					result = result + String.fromCharCode(str.charCodeAt(i) + 13);
+				}
+			} 
+			else
+			{
+				result = result + str.charAt(i);
+			}
+		}
+		
+	};
+	return result;
 }
 
 /**
@@ -238,7 +336,14 @@ function encodeToRot13(str) {
  *   isString(new String('test')) => true
  */
 function isString(value) {
-    throw new Error('Not implemented');
+	if (typeof value == "string" || value instanceof String)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }
 
 
@@ -247,10 +352,10 @@ function isString(value) {
  * 
  * Playing cards inittial deck inclides the cards in the following order:
  * 
- *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣',
- *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦',
- *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥',
- *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'
+ *  'A♣','2♣','3♣','4♣','5♣','6♣','7♣','8♣','9♣','10♣','J♣','Q♣','K♣', 9827
+ *  'A♦','2♦','3♦','4♦','5♦','6♦','7♦','8♦','9♦','10♦','J♦','Q♦','K♦', 9830
+ *  'A♥','2♥','3♥','4♥','5♥','6♥','7♥','8♥','9♥','10♥','J♥','Q♥','K♥', 9829
+ *  'A♠','2♠','3♠','4♠','5♠','6♠','7♠','8♠','9♠','10♠','J♠','Q♠','K♠'  9824
  * 
  * (see https://en.wikipedia.org/wiki/Standard_52-card_deck)
  * Function returns the zero-based index of specified card in the initial deck above.
@@ -267,7 +372,44 @@ function isString(value) {
  *   'K♠' => 51
  */
 function getCardId(value) {
-    throw new Error('Not implemented');
+	var result = 0;
+    var mast = ["♣", "♦", "♥", "♠"];
+	function getMastNumber(symb){
+		for ( var i = 0; i < 4; i++)
+		{
+			if(symb == mast[i])
+			{
+				return i;
+			}
+		}
+	}
+	
+	function getValueNumber(symb){
+		switch(symb){
+			case "A" : return 0; break;
+			case "J" : return 10; break;
+			case "Q" : return 11; break;
+			case "K" : return 12; break;
+			default : return Number(symb) - 1;
+		}
+	}
+	
+	if (value.length == 3)
+	{	
+		switch(value){
+			case "10♣" : result = 9; break;
+			case "10♦" : result = 22; break;
+			case "10♥" : result = 35; break;
+			case "10♠" : result = 48; break;
+			default : return Number(symb) - 1;
+		}
+	}
+	else
+	{
+		result = getMastNumber(value.charAt(1)) * 13 + getValueNumber(value.charAt(0));
+	}
+	
+	return result;
 }
 
 
